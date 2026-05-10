@@ -140,7 +140,7 @@ document.getElementById("inventorySection")
 async function loadOrders(){
 
 const response =
-await fetch("http://localhost:3000/orders");
+await fetch("https://gauravsweets-backend.onrender.com/orders");
 
 const orders =
 await response.json();
@@ -290,7 +290,7 @@ Delete
 async function completeOrder(orderId){
 
 await fetch(
-`http://localhost:3000/complete-order/${orderId}`,
+`https://gauravsweets-backend.onrender.com/complete-order/${orderId}`,
 {
 method:"POST"
 });
@@ -302,7 +302,7 @@ loadOrders();
 async function deleteOrder(orderId){
 
 await fetch(
-`http://localhost:3000/delete-order/${orderId}`,
+`https://gauravsweets-backend.onrender.com/delete-order/${orderId}`,
 {
 method:"DELETE"
 });
@@ -314,7 +314,7 @@ loadOrders();
 async function loadInventory(){
 
 const response =
-await fetch("http://localhost:3000/inventory");
+await fetch("https://gauravsweets-backend.onrender.com/inventory");
 
 const inventory =
 await response.json();
@@ -390,7 +390,7 @@ Out Of Stock
 async function updateInventory(name, status){
 
 await fetch(
-"http://localhost:3000/update-inventory",
+"https://gauravsweets-backend.onrender.com/update-inventory",
 {
 
 method:"POST",
