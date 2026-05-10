@@ -187,7 +187,7 @@ floatingCart.classList.add("d-none");
 async function loadInventory(){
 
 let response =
-await fetch("http://localhost:3000/inventory");
+await fetch("https://gauravsweets-backend.onrender.com/inventory");
 
 let inventory =
 await response.json();
