@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Shopping Cart</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+.cart-item img{
+height:80px;
+object-fit:cover;
+border-radius:10px;
+}
+
+.quantity-box{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.quantity-btn{
+width:35px;
+height:35px;
+border:none;
+background:#dc3545;
+color:white;
+border-radius:50%;
+font-weight:bold;
+}
+
+.quantity-btn:hover{
+background:#bb2d3b;
+}
+
+.cart-card{
+border:none;
+border-radius:15px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+  <div class="container">
+
+    <a class="navbar-brand" href="index.html">
+      <img src="images/logo.png" height="70" alt="Gaurav Sweets">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="products.html">Products</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" href="cart.html">Cart</a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<div class="container text-center mt-5">
+<h1 class="fw-bold">Your Cart</h1>
+<p class="text-muted">Review your selected sweets</p>
+</div>
+
+<!-- Cart Section -->
+<div class="container mt-4 mb-5">
+
+<div id="cartContainer"></div>
+
+<div class="card cart-card p-4 mt-4">
+
+<div class="d-flex justify-content-between mb-2">
+<h5>Subtotal</h5>
+<h5>₹<span id="subtotalAmount">0</span></h5>
+</div>
+
+<div class="d-flex justify-content-between mb-3">
+<h5>Platform & Delivery Charges</h5>
+<h5>₹20</h5>
+</div>
+
+<hr>
+
+<div class="d-flex justify-content-between align-items-center">
+<h4 class="fw-bold">Final Total</h4>
+
+<h3 class="text-danger fw-bold">
+₹<span id="totalAmount">0</span>
+</h3>
+</div>
+
+<a href="checkout.html" class="btn btn-danger btn-lg w-100 mt-4">
+Proceed to Checkout
+</a>
+
+</div>
+
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center p-3">
+© 2026 Gaurav Sweets
+</footer>
+
+<script>
+
+function loadCart(){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let container = document.getElementById("cartContainer");
+
+let total = 0;
+
+if(cart.length === 0){
+
+container.innerHTML = `
+<div class="alert alert-warning text-center">
+Your cart is empty
+</div>
+`;
+
+document.getElementById("subtotalAmount").innerText = 0;
+document.getElementById("totalAmount").innerText = 0;
+
+return;
+}
+
+container.innerHTML = "";
+
+cart.forEach(item => {
+
+total += item.price * item.qty;
+
+container.innerHTML += `
+
+<div class="card cart-card mb-3 p-3">
+
+<div class="row align-items-center">
+
+<div class="col-md-2 text-center">
+<img src="images/${item.name.toLowerCase().replace(/ /g,"-")}.jpg"
+class="img-fluid">
+</div>
+
+<div class="col-md-4">
+<h5>${item.name}</h5>
+<p class="text-danger fw-bold">
+₹${item.price}
+</p>
+</div>
+
+<div class="col-md-3">
+
+<div class="quantity-box">
+
+<button class="quantity-btn"
+onclick="decreaseQty('${item.name}')">
+-
+</button>
+
+<span>${item.qty}</span>
+
+<button class="quantity-btn"
+onclick="increaseQty('${item.name}')">
++
+</button>
+
+</div>
+
+</div>
+
+<div class="col-md-3 text-end">
+
+<h5>
+₹${item.price * item.qty}
+</h5>
+
+</div>
+
+</div>
+
+</div>
+`;
+});
+
+document.getElementById("subtotalAmount").innerText = total;
+
+let finalTotal = total + 20;
+
+document.getElementById("totalAmount").innerText = finalTotal;
+
+}
+
+function increaseQty(name){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let item = cart.find(p => p.name === name);
+
+item.qty++;
+
+localStorage.setItem("cart", JSON.stringify(cart));
+
+loadCart();
+}
+
+function decreaseQty(name){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let item = cart.find(p => p.name === name);
+
+item.qty--;
+
+if(item.qty <= 0){
+cart = cart.filter(p => p.name !== name);
+}
+
+localStorage.setItem("cart", JSON.stringify(cart));
+
+loadCart();
+}
+
+loadCart();
+
+</script>
+
+</body>
+</html>

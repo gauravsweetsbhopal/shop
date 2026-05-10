@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Our Sweets</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      <img src="images/logo.png" height="70" alt="Gaurav Sweets">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="products.html">Products</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="cart.html">Cart</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<div class="container text-center mt-5">
+<h1 class="fw-bold">Our Sweet Collection</h1>
+<p class="text-muted">Fresh traditional sweets prepared daily at Gaurav Sweets</p>
+</div>
+
+<!-- Search -->
+<div class="container mb-4">
+<input 
+type="text" 
+id="searchInput" 
+class="form-control" 
+placeholder="Search for sweets..."
+onkeyup="searchSweets()">
+</div>
+
+<!-- Products -->
+<div class="container mt-4 mb-5">
+<div class="row g-4">
+
+<!-- 1 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Malai Chom Chom"
+data-name="Malai Chom Chom"
+data-price="420">
+
+<img src="images/malai-chom-chom.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Malai Chom Chom</h5>
+
+<p class="text-danger fw-bold">₹420 / kg</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 2 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Pantuwa"
+data-name="Pantuwa"
+data-price="380">
+
+<img src="images/pantuwa.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Pantuwa</h5>
+
+<p class="text-danger fw-bold">₹380 / kg</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 3 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Pati Shapta"
+data-name="Pati Shapta"
+data-price="40">
+
+<img src="images/pati-shapta.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Pati Shapta</h5>
+
+<p class="text-danger fw-bold">₹40 / piece</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 4 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Rasgulla"
+data-name="Rasgulla"
+data-price="320">
+
+<img src="images/rasgulla.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Rasgulla</h5>
+
+<p class="text-danger fw-bold">₹320 / kg</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 5 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Lobongo Latika"
+data-name="Lobongo Latika"
+data-price="45">
+
+<img src="images/lobongo-latika.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Lobongo Latika</h5>
+
+<p class="text-danger fw-bold">₹45 / piece</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 6 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Darbesh"
+data-name="Darbesh"
+data-price="360">
+
+<img src="images/darbesh.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Darbesh</h5>
+
+<p class="text-danger fw-bold">₹360 / kg</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 7 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Kalo Jaam"
+data-name="Kalo Jaam"
+data-price="340">
+
+<img src="images/kalo-jaam.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Kalo Jaam</h5>
+
+<p class="text-danger fw-bold">₹340 / kg</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 8 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Raj Bhog"
+data-name="Raj Bhog"
+data-price="380">
+
+<img src="images/raj-bhog.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Raj Bhog</h5>
+
+<p class="text-danger fw-bold">₹380 / kg</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 9 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Bhapa Doi"
+data-name="Bhapa Doi"
+data-price="120">
+
+<img src="images/bhapa-doi.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Bhapa Doi</h5>
+
+<p class="text-danger fw-bold">₹120 / cup</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 10 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Chanar Jelabi"
+data-name="Chanar Jelabi"
+data-price="300">
+
+<img src="images/chanar-jelabi.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Chanar Jelabi</h5>
+
+<p class="text-danger fw-bold">₹300 / kg</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 11 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Mishti Doi"
+data-name="Mishti Doi"
+data-price="110">
+
+<img src="images/mishti-doi.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Mishti Doi</h5>
+
+<p class="text-danger fw-bold">₹110 / cup</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 12 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Khaja"
+data-name="Khaja"
+data-price="260">
+
+<img src="images/khaja.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Khaja</h5>
+
+<p class="text-danger fw-bold">₹260 / kg</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 13 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Lady Kenny"
+data-name="Lady Kenny"
+data-price="420">
+
+<img src="images/lady-kenny.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Lady Kenny</h5>
+
+<p class="text-danger fw-bold">₹420 / kg</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 14 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Kalakhand"
+data-name="Kalakhand"
+data-price="460">
+
+<img src="images/kalakhand.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Kalakhand</h5>
+
+<p class="text-danger fw-bold">₹460 / kg</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 15 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Nikuti"
+data-name="Nikuti"
+data-price="340">
+
+<img src="images/nikuti.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Nikuti</h5>
+
+<p class="text-danger fw-bold">₹340 / kg</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 16 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Sita Bhog"
+data-name="Sita Bhog"
+data-price="420">
+
+<img src="images/sita-bhog.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Sita Bhog</h5>
+
+<p class="text-danger fw-bold">₹420 / kg</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 17 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Kamala Bhog"
+data-name="Kamala Bhog"
+data-price="360">
+
+<img src="images/kamala-bhog.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Kamala Bhog</h5>
+
+<p class="text-danger fw-bold">₹360 / kg</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 18 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Kacha Gola"
+data-name="Kacha Gola"
+data-price="380">
+
+<img src="images/kacha-gola.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Kacha Gola</h5>
+
+<p class="text-danger fw-bold">₹380 / kg</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+<!-- 19 -->
+<div class="col-md-3 product-wrapper">
+<div class="card h-100 product-card"
+id="Gopal Bhog"
+data-name="Gopal Bhog"
+data-price="420">
+
+<img src="images/gopal-bhog.jpg" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Gopal Bhog</h5>
+
+<p class="text-danger fw-bold">₹420 / kg</p>
+
+<div class="inventory-status mt-2"></div>
+
+<div class="cart-btn mt-2"></div>
+
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- Floating Cart Bar -->
+
+<div id="floatingCart" class="floating-cart d-none">
+
+    <div>
+
+        <span id="floatingCartText">
+            0 items • ₹0
+        </span>
+
+    </div>
+
+    <a href="cart.html" class="btn btn-light fw-bold">
+
+        View Cart
+
+    </a>
+
+</div>
+
+<footer class="bg-dark text-white text-center p-3">
+© 2026 Gaurav Sweets
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/script.js"></script>
+
+</body>
+</html>

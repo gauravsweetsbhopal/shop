@@ -1,0 +1,78 @@
+[
+  {
+    "name": "Malai Chom Chom",
+    "status": "out-of-stock"
+  },
+  {
+    "name": "Pantuwa",
+    "status": "in-stock"
+  },
+  {
+    "name": "Pati Shapta",
+    "status": "in-stock"
+  },
+  {
+    "name": "Rasgulla",
+    "status": "in-stock"
+  },
+  {
+    "name": "Lobongo Latika",
+    "status": "in-stock"
+  },
+  {
+    "name": "Darbesh",
+    "status": "in-stock"
+  },
+  {
+    "name": "Kalo Jaam",
+    "status": "in-stock"
+  },
+  {
+    "name": "Raj Bhog",
+    "status": "in-stock"
+  },
+  {
+    "name": "Bhapa Doi",
+    "status": "in-stock"
+  },
+  {
+    "name": "Chanar Jelabi",
+    "status": "in-stock"
+  },
+  {
+    "name": "Mishti Doi",
+    "status": "in-stock"
+  },
+  {
+    "name": "Khaja",
+    "status": "in-stock"
+  },
+  {
+    "name": "Lady Kenny",
+    "status": "in-stock"
+  },
+  {
+    "name": "Kalakhand",
+    "status": "in-stock"
+  },
+  {
+    "name": "Nikuti",
+    "status": "in-stock"
+  },
+  {
+    "name": "Sita Bhog",
+    "status": "in-stock"
+  },
+  {
+    "name": "Kamala Bhog",
+    "status": "in-stock"
+  },
+  {
+    "name": "Kacha Gola",
+    "status": "in-stock"
+  },
+  {
+    "name": "Gopal Bhog",
+    "status": "in-stock"
+  }
+]

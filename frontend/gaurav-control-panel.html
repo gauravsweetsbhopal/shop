@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gaurav Admin Portal</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+
+background:#f8f9fa;
+
+}
+
+.order-card,
+.inventory-card{
+
+border:none;
+
+border-radius:15px;
+
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+
+transition:0.3s;
+
+}
+
+.order-card:hover,
+.inventory-card:hover{
+
+transform:translateY(-3px);
+
+}
+
+.completed{
+
+border-left:8px solid #28a745;
+
+}
+
+.pending{
+
+border-left:8px solid #ffc107;
+
+}
+
+.tab-btn{
+
+min-width:250px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container py-5">
+
+<h1 class="fw-bold text-danger mb-4">
+
+Gaurav Sweets Admin Portal
+
+</h1>
+
+<div class="d-flex gap-3 mb-4 flex-wrap">
+
+<button class="btn btn-danger tab-btn"
+onclick="showOrders()">
+
+Order Management
+
+</button>
+
+<button class="btn btn-dark tab-btn"
+onclick="showInventory()">
+
+Inventory Management
+
+</button>
+
+</div>
+
+<div id="ordersSection"></div>
+
+<div id="inventorySection" style="display:none;"></div>
+
+</div>
+
+<script>
+
+if(sessionStorage.getItem("adminAccess") !== "granted"){
+
+let password = prompt("Enter Admin Password");
+
+if(password === "gaurav123"){
+
+sessionStorage.setItem(
+"adminAccess",
+"granted"
+);
+
+}else{
+
+alert("Wrong Password");
+
+window.location.href = "index.html";
+
+}
+
+}
+
+function showOrders(){
+
+document.getElementById("ordersSection")
+.style.display = "block";
+
+document.getElementById("inventorySection")
+.style.display = "none";
+
+}
+
+function showInventory(){
+
+document.getElementById("ordersSection")
+.style.display = "none";
+
+document.getElementById("inventorySection")
+.style.display = "block";
+
+}
+
+async function loadOrders(){
+
+const response =
+await fetch("http://localhost:3000/orders");
+
+const orders =
+await response.json();
+
+const container =
+document.getElementById("ordersSection");
+
+container.innerHTML = "";
+
+if(orders.length === 0){
+
+container.innerHTML = `
+<div class="alert alert-warning">
+No Orders Available
+</div>
+`;
+
+return;
+
+}
+
+orders.reverse().forEach(order => {
+
+let itemsList = "";
+
+let total = 0;
+
+order.cart.forEach(item => {
+
+itemsList += `
+<li>
+${item.name} x ${item.qty}
+</li>
+`;
+
+total += item.price * item.qty;
+
+});
+
+total += 20;
+
+const whatsappMessage =
+`Hello ${order.name},
+
+Your order ${order.orderId} has been confirmed.
+
+Final Total: ₹${total}
+
+Your order will arrive shortly.
+
+Thank you for choosing Gaurav Sweets 🙏`;
+
+const whatsappURL =
+`https://wa.me/91${order.phone}?text=${encodeURIComponent(whatsappMessage)}`;
+
+const statusBadge =
+order.status === "completed"
+
+? `<span class="badge bg-success mb-3">
+Completed Order
+</span>`
+
+: `<span class="badge bg-warning text-dark mb-3">
+Pending Order
+</span>`;
+
+const cardClass =
+order.status === "completed"
+? "completed"
+: "pending";
+
+container.innerHTML += `
+
+<div class="card order-card ${cardClass} p-4 mb-4">
+
+${statusBadge}
+
+<h4 class="fw-bold text-danger">
+${order.orderId}
+</h4>
+
+<p>
+<b>Customer:</b> ${order.name}
+</p>
+
+<p>
+<b>Phone:</b> ${order.phone}
+</p>
+
+<p>
+<b>Address:</b><br>
+${order.address}
+</p>
+
+<ul>
+${itemsList}
+</ul>
+
+<h5>
+Final Total: ₹${total}
+</h5>
+
+<div class="d-flex gap-2 mt-3 flex-wrap">
+
+<a href="${whatsappURL}"
+class="btn btn-success">
+
+WhatsApp Customer
+
+</a>
+
+<a href="tel:${order.phone}"
+class="btn btn-primary">
+
+Call Customer
+
+</a>
+
+${order.status !== "completed" ? `
+
+<button class="btn btn-dark"
+onclick="completeOrder('${order.orderId}')">
+
+Mark Complete
+
+</button>
+
+` : ""}
+
+<button class="btn btn-danger"
+onclick="deleteOrder('${order.orderId}')">
+
+Delete
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+async function completeOrder(orderId){
+
+await fetch(
+`http://localhost:3000/complete-order/${orderId}`,
+{
+method:"POST"
+});
+
+loadOrders();
+
+}
+
+async function deleteOrder(orderId){
+
+await fetch(
+`http://localhost:3000/delete-order/${orderId}`,
+{
+method:"DELETE"
+});
+
+loadOrders();
+
+}
+
+async function loadInventory(){
+
+const response =
+await fetch("http://localhost:3000/inventory");
+
+const inventory =
+await response.json();
+
+const container =
+document.getElementById("inventorySection");
+
+container.innerHTML = "";
+
+inventory.forEach(item => {
+
+let badge =
+item.status === "in-stock"
+
+? `<span class="badge bg-success">
+In Stock
+</span>`
+
+: `<span class="badge bg-danger">
+Out Of Stock
+</span>`;
+
+container.innerHTML += `
+
+<div class="card inventory-card p-4 mb-4">
+
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+<div>
+
+<h4 class="fw-bold text-danger">
+${item.name}
+</h4>
+
+${badge}
+
+</div>
+
+<div class="d-flex gap-2 flex-wrap">
+
+<button class="btn btn-success"
+onclick="updateInventory(
+'${item.name}',
+'in-stock'
+)">
+
+In Stock
+
+</button>
+
+<button class="btn btn-danger"
+onclick="updateInventory(
+'${item.name}',
+'out-of-stock'
+)">
+
+Out Of Stock
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+async function updateInventory(name, status){
+
+await fetch(
+"http://localhost:3000/update-inventory",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+name,
+status
+})
+
+});
+
+await loadInventory();
+
+showInventory();
+
+}
+
+loadOrders();
+
+loadInventory();
+
+</script>
+
+</body>
+</html>
