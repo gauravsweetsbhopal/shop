@@ -249,6 +249,70 @@ app.delete("/delete-order/:id", (req, res) => {
 
 });
 
+// FEEDBACK SYSTEM
+
+const feedbackPath = path.join(__dirname, 'feedback.json');
+
+// GET FEEDBACK
+
+app.get('/feedback', (req, res) => {
+
+try {
+
+const feedback = JSON.parse(fs.readFileSync(feedbackPath));
+
+res.json(feedback);
+
+} catch (err) {
+
+res.status(500).json({ error: 'Failed to load feedback' });
+
+}
+
+});
+
+// SAVE FEEDBACK
+
+app.post('/feedback', (req, res) => {
+
+try {
+
+const feedback = JSON.parse(fs.readFileSync(feedbackPath));
+
+const newMessage = {
+
+id: Date.now(),
+
+name: req.body.name,
+email: req.body.email,
+phone: req.body.phone,
+message: req.body.message,
+
+createdAt: new Date().toLocaleString()
+
+};
+
+feedback.unshift(newMessage);
+
+fs.writeFileSync(
+feedbackPath,
+JSON.stringify(feedback, null, 2)
+);
+
+res.json({ success: true });
+
+} catch (err) {
+
+console.log(err);
+
+res.status(500).json({
+error: 'Failed to save feedback'
+});
+
+}
+
+});
+
 
 const INVENTORY_FILE = "inventory.json";
 
