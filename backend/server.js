@@ -1,10 +1,26 @@
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
+const nodemailer = require("nodemailer");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const transporter = nodemailer.createTransport({
+
+    service: "gmail",
+
+    family: 4,
+
+    auth: {
+
+        user: "vivekkirtania484440@gmail.com",
+
+        pass: process.env.EMAIL_PASS
+
+    }
+
+});
 
 app.use(cors());
 app.use(express.json());
@@ -88,7 +104,72 @@ Thank you for choosing Gaurav Sweets 🙏`;
     const whatsappURL =
     `https://wa.me/91${order.phone}?text=${encodeURIComponent(whatsappMessage)}`;
 
-    
+    // Email options
+    const mailOptions = {
+
+        from: "vivekkirtania484440@gmail.com",
+
+        to: "vivekkirtania484440@gmail.com",
+
+        subject: `New Order Received - ${orderId}`,
+
+        html: `
+
+        <h2>New Order Received</h2>
+
+        <p><b>Order ID:</b> ${orderId}</p>
+
+        <p><b>Customer Name:</b> ${order.name}</p>
+
+        <p><b>Phone:</b> ${order.phone}</p>
+
+        <p><b>Address:</b><br>${order.address}</p>
+
+        <hr>
+
+        <h3>Items Ordered</h3>
+
+        <pre>${itemsList}</pre>
+
+        <p><b>Subtotal:</b> ₹${subtotal}</p>
+
+        <p><b>Platform & Delivery Charges:</b> ₹${deliveryCharge}</p>
+
+        <h3>Final Total: ₹${finalTotal}</h3>
+
+        <hr>
+
+        <a href="${whatsappURL}"
+        style="
+        background:#25D366;
+        color:white;
+        padding:12px 20px;
+        text-decoration:none;
+        border-radius:8px;
+        display:inline-block;
+        font-weight:bold;
+        ">
+        Send WhatsApp Confirmation
+        </a>
+
+        `
+
+    };
+
+    // Send email
+    transporter.sendMail(mailOptions, (error, info) => {
+
+        if (error) {
+
+            console.log(error);
+
+        } else {
+
+            console.log("Email sent: " + info.response);
+
+        }
+
+    });
 
     // Response
     res.json({

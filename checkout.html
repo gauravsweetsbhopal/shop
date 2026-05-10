@@ -268,27 +268,6 @@ async function placeOrder() {
 
             localStorage.setItem("lastOrderId", data.orderId);
 
-            await emailjs.send(
-            "service_ld4esu7",
-            "template_ml5ixdj",
-            {
-            order_id: "GS" + Math.floor(Math.random() * 10000),
-
-            customer_name: name,
-
-            phone: phone,
-
-            address: address,
-
-            items: cart.map(
-            item => `${item.name} x ${item.qty}`
-            ).join("\n"),
-
-            subtotal: subtotal,
-
-            total: subtotal + 20
-            }
-            );
             window.location.href = "success.html";
 
         } else {
@@ -307,10 +286,6 @@ async function placeOrder() {
 }
 
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-<script>
-emailjs.init("vq4QwrKG6L4jOVYLe");
-</script>
 </body>
 </html>
