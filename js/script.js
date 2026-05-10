@@ -53,7 +53,7 @@ localStorage.setItem(
 JSON.stringify(cart)
 );
 
-updateButtons();
+loadInventory();
 
 }
 
@@ -83,7 +83,7 @@ localStorage.setItem(
 JSON.stringify(cart)
 );
 
-updateButtons();
+loadInventory();
 
 }
 
@@ -186,55 +186,167 @@ floatingCart.classList.add("d-none");
 
 async function loadInventory(){
 
-let response =
-await fetch("https://gauravsweets-backend.onrender.com/inventory");
+    try{
 
-let inventory =
-await response.json();
+        let response =
+        await fetch(
+        "https://gauravsweets-backend.onrender.com/inventory"
+        );
 
-inventory.forEach(item => {
+        let inventory =
+        await response.json();
 
-let product =
-document.getElementById(item.name);
+        document.querySelectorAll(".product-card")
+        .forEach(card => {
 
-if(!product) return;
+            const name = card.dataset.name;
+            const price = Number(card.dataset.price);
 
-let statusDiv =
-product.querySelector(".inventory-status");
+            const item =
+            inventory.find(
+                p => p.name === name
+            );
 
-let cartBtn =
-product.querySelector(".cart-btn");
+            const statusDiv =
+            card.querySelector(".inventory-status");
 
-product.classList.remove("out-of-stock");
+            const cartBtn =
+            card.querySelector(".cart-btn");
 
-if(item.status === "in-stock"){
+            if(!item) return;
 
-statusDiv.innerHTML = "";
+            // RESET
+            card.classList.remove("out-of-stock");
 
-cartBtn.style.display = "block";
+            // IN STOCK
+            if(item.status === "in-stock"){
+
+                statusDiv.innerHTML = "";
+
+                cartBtn.style.display = "block";
+
+                let cart =
+                JSON.parse(
+                    localStorage.getItem("cart")
+                ) || [];
+
+                let cartItem =
+                cart.find(p => p.name === name);
+
+                if(cartItem){
+
+                    cartBtn.innerHTML = `
+
+                    <div class="d-flex justify-content-center align-items-center gap-2">
+
+                    <button class="btn btn-danger btn-sm"
+                    onclick="removeFromCart('${name}')">
+
+                    -
+
+                    </button>
+
+                    <span class="fw-bold">
+
+                    ${cartItem.qty}
+
+                    </span>
+
+                    <button class="btn btn-danger btn-sm"
+                    onclick="addToCart('${name}', ${price})">
+
+                    +
+
+                    </button>
+
+                    </div>
+
+                    `;
+
+                }else{
+
+                    cartBtn.innerHTML = `
+
+                    <button class="btn btn-danger btn-sm"
+                    onclick="addToCart('${name}', ${price})">
+
+                    Add +
+
+                    </button>
+
+                    `;
+
+                }
+
+            }
+
+            // OUT OF STOCK
+            else{
+
+                card.classList.add("out-of-stock");
+
+                statusDiv.innerHTML = `
+
+                <span class="badge bg-danger">
+
+                Out Of Stock
+
+                </span>
+
+                `;
+
+                cartBtn.innerHTML = "";
+
+                cartBtn.style.display = "none";
+
+            }
+
+        });
+
+        updateFloatingCart();
+
+    }catch(error){
+
+        console.log(error);
+
+    }
 
 }
+function updateFloatingCart(){
 
-if(item.status === "out-of-stock"){
+    let cart =
+    JSON.parse(localStorage.getItem("cart")) || [];
 
-statusDiv.innerHTML = `
+    let totalItems = 0;
+    let totalPrice = 0;
 
-<span class="badge bg-danger">
+    cart.forEach(item => {
 
-Out Of Stock
+        totalItems += item.qty;
+        totalPrice += item.qty * item.price;
 
-</span>
-`;
+    });
 
-product.classList.add("out-of-stock");
+    const floatingCart =
+    document.getElementById("floatingCart");
 
-cartBtn.style.display = "none";
+    const floatingCartText =
+    document.getElementById("floatingCartText");
 
-}
+    if(!floatingCart) return;
 
-});
+    if(totalItems > 0){
 
-updateButtons();
+        floatingCart.classList.remove("d-none");
+
+        floatingCartText.innerText =
+        `${totalItems} item(s) • ₹${totalPrice}`;
+
+    }else{
+
+        floatingCart.classList.add("d-none");
+
+    }
 
 }
 
