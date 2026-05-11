@@ -254,6 +254,12 @@ app.delete("/delete-order/:id", (req, res) => {
 
 const feedbackPath = path.join(__dirname, 'feedback.json');
 
+if (!fs.existsSync(feedbackPath)) {
+
+fs.writeFileSync(feedbackPath, "[]");
+
+}
+
 // GET FEEDBACK
 
 app.get('/feedback', (req, res) => {
