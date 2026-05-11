@@ -88,11 +88,20 @@ Inventory Management
 
 </button>
 
+<button class="btn btn-primary tab-btn"
+onclick="showFeedback()">
+
+Customer Feedback
+
+</button>
+
 </div>
 
 <div id="ordersSection"></div>
 
 <div id="inventorySection" style="display:none;"></div>
+
+<div id="feedbackSection" style="display:none;"></div>
 
 </div>
 
@@ -127,6 +136,9 @@ document.getElementById("ordersSection")
 document.getElementById("inventorySection")
 .style.display = "none";
 
+document.getElementById("feedbackSection")
+.style.display = "none";
+
 }
 
 function showInventory(){
@@ -135,6 +147,22 @@ document.getElementById("ordersSection")
 .style.display = "none";
 
 document.getElementById("inventorySection")
+.style.display = "block";
+
+document.getElementById("feedbackSection")
+.style.display = "none";
+
+}
+
+function showFeedback(){
+
+document.getElementById("ordersSection")
+.style.display = "none";
+
+document.getElementById("inventorySection")
+.style.display = "none";
+
+document.getElementById("feedbackSection")
 .style.display = "block";
 
 }
@@ -413,10 +441,90 @@ await loadInventory();
 showInventory();
 
 }
+async function loadFeedback(){
+
+const response =
+await fetch(
+"https://gauravsweets-backend.onrender.com/feedback"
+);
+
+const feedback =
+await response.json();
+
+const container =
+document.getElementById("feedbackSection");
+
+container.innerHTML = "";
+
+if(feedback.length === 0){
+
+container.innerHTML = `
+
+<div class="alert alert-warning">
+
+No Feedback Yet
+
+</div>
+
+`;
+
+return;
+
+}
+
+feedback.reverse().forEach(item => {
+
+container.innerHTML += `
+
+<div class="card order-card p-4 mb-4">
+
+<div class="d-flex justify-content-between flex-wrap">
+
+<div>
+
+<h4 class="fw-bold text-primary">
+${item.name}
+</h4>
+
+<p>
+<b>Email:</b>
+${item.email}
+</p>
+
+<p>
+<b>Phone:</b>
+${item.phone}
+</p>
+
+</div>
+
+<small class="text-muted">
+${item.createdAt}
+</small>
+
+</div>
+
+<hr>
+
+<p style="font-size:1.05rem; line-height:1.8;">
+
+${item.message}
+
+</p>
+
+</div>
+
+`;
+
+});
+
+}
 
 loadOrders();
 
 loadInventory();
+
+loadFeedback();
 
 </script>
 
