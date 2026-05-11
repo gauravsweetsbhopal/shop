@@ -16,7 +16,6 @@ font-family:'Great Vibes',cursive;
 color:#b22222;
 font-size:2.2rem;
 }
-
 .hero{
 height:420px;
 background:linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
@@ -201,4 +200,17 @@ transform: translate(-50%, 0);
 
 }
 
+}
+
+footer h4{
+font-family:'Playfair Display',serif;
+font-weight:700;
+}
+
+footer p{
+font-size:16px;
+}
+
+footer img{
+object-fit:contain;
 }
