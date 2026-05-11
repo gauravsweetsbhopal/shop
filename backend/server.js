@@ -320,6 +320,28 @@ error: 'Failed to save feedback'
 
 });
 
+// DELETE FEEDBACK
+
+app.delete("/delete-feedback/:id", (req, res) => {
+
+let feedback = JSON.parse(
+fs.readFileSync(feedbackPath)
+);
+
+feedback = feedback.filter(
+item => item.id != req.params.id
+);
+
+fs.writeFileSync(
+feedbackPath,
+JSON.stringify(feedback, null, 2)
+);
+
+res.json({
+success:true
+});
+
+});
 
 const INVENTORY_FILE = "inventory.json";
 

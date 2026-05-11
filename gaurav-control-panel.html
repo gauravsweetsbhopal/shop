@@ -441,6 +441,21 @@ await loadInventory();
 showInventory();
 
 }
+
+async function deleteFeedback(id){
+
+await fetch(
+`https://gauravsweets-backend.onrender.com/delete-feedback/${id}`,
+{
+method:"DELETE"
+});
+
+loadFeedback();
+
+showFeedback();
+
+}
+
 async function loadFeedback(){
 
 const response =
@@ -473,6 +488,12 @@ return;
 }
 
 feedback.reverse().forEach(item => {
+const whatsappURL =
+`https://wa.me/91${item.phone}?text=${encodeURIComponent(
+`Hello ${item.name},
+
+Thank you for your feedback to Gaurav Sweets 🙏`
+)}`;
 
 container.innerHTML += `
 
@@ -512,10 +533,34 @@ ${item.message}
 
 </p>
 
+<div class="d-flex gap-2 flex-wrap mt-3">
+
+<a href="${whatsappURL}"
+class="btn btn-success">
+
+WhatsApp
+
+</a>
+
+<a href="mailto:${item.email}"
+class="btn btn-primary">
+
+Email Customer
+
+</a>
+
+<button class="btn btn-danger"
+onclick="deleteFeedback('${item.id}')">
+
+Delete
+
+</button>
+
+</div>
+
 </div>
 
 `;
-
 });
 
 }
